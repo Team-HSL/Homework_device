@@ -26,7 +26,11 @@ def spreadsheet(date,student_num):
         date = datetime.datetime.today().strftime("%m/%d")
         ws.update_cell(student_num + 1, date_index + 1, date + ' 提出')
         student_name = ws.cell(student_num + 1, 2).value
-        print("出席番号{}番の{}さん，宿題よくがんばりました．".format(student_num,student_name))
+        message = "出席番号" + str(student_num) + "番の" + student_name + "さん，宿題よくがんばりました"
 
     except ValueError:
-        print("シートに該当の日付が存在しません")
+        message = "シートに該当の日付が存在しません"
+
+    return message
+
+

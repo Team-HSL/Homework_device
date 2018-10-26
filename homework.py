@@ -15,6 +15,8 @@ from matplotlib.patches import Polygon
 from PIL import Image
 from io import BytesIO
 
+from spreadsheet import spreadsheet
+
 #画像切り抜き対象の座標を取得
 def getRectByPoints(points):
     points = list(map(lambda x: x[0], points))
@@ -90,7 +92,7 @@ key = file.read()
 subscription_key = key
 assert subscription_key
 
-vision_base_url = "https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/"
+vision_base_url =  "https://southeastasia.api.cognitive.microsoft.com/vision/v2.0/"
 text_recognition_url = vision_base_url + "recognizeText"
 
 # Localから画像を取得する
@@ -127,8 +129,13 @@ if ("recognitionResult" in analysis):
     # Extract the recognized text, with bounding boxes.
     polygons = [(line["boundingBox"], line["text"])
         for line in analysis["recognitionResult"]["lines"]]
-print(polygons)
 
 '''
-2.スプレッドシート上で提出済みとする
+3.出席番号をspreadsheet APIに渡す
 '''
+
+date = "9/21"
+student_num = polygons[0][1].replace(" ", "")
+
+message = spreadsheet(date,int(student_num))
+print(message)
